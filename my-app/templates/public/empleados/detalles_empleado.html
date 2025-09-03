@@ -1,110 +1,97 @@
 {% extends 'public/base_cpanel.html' %}
-<!--Cambiando el title-->
-{% block title %}Crud con Python 🐍 | Registrar Empleado{% endblock %}
-<!---->
+{% block title %}Crud con Python 🐍 | Detalle Empleado{% endblock %}
 {% block customCSS %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename ='assets/css/file.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/file.css') }}" />
+<style>
+  .employee-info {
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgb(0 0 0 / 0.1);
+    padding: 2rem;
+  }
+  .employee-info .field-label {
+    font-weight: 600;
+    color: #2c3e50;
+  }
+  .employee-info .field-value {
+    font-size: 1.1rem;
+    color: #34495e;
+  }
+  .employee-img {
+    max-width: 250px;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  }
+  .back-btn {
+    margin-bottom: 1.5rem;
+  }
+</style>
 {% endblock %}
 
-<!--Inicio del block-->
 {% block body %}
-<!---->
-{% if (detalle_empleado|length) %}
-<div class="card" style="border-radius: 0px !important">
-  <div class="row justify-content-center mb-2">
-    <div class="col-md-12">
-      <h3 class="text-center mt-5 mb-3">
-        <a href="/lista-de-empleados">
-          <i class="bi bi-arrow-left-circle"></i>
-        </a>
-        INFORMACIÓN DEL EMPLEADO
-      </h3>
-      <hr />
+<div class="container my-5">
+  {% if detalle_empleado %}
+  <a href="/lista-de-empleados" class="btn btn-primary back-btn">
+    <i class="bi bi-arrow-left-circle"></i> Volver a lista
+  </a>
+
+  <h2 class="text-center mb-4">Información del Empleado</h2>
+
+  <div class="row employee-info align-items-center">
+    <div class="col-lg-4 text-center mb-4 mb-lg-0">
+      <img
+        src="/static/fotos_empleados/{{ detalle_empleado.foto_empleado }}"
+        alt="Foto de {{ detalle_empleado.nombre_empleado }}"
+        class="employee-img"
+      />
     </div>
-  </div>
-
-  <div class="row justify-content-center mb-2">
-    <div class="col-md-10">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-6">
-            <label for="nombre_empleado" class="form-label">
-              Nombre del empleado
-            </label>
-            <br />
-            {{ detalle_empleado.nombre_empleado}}
-          </div>
-          <div class="col-md-6">
-            <label for="apellido_empleado" class="form-label">
-              Apellido del empleado
-            </label>
-            <br />
-            {{ detalle_empleado.apellido_empleado}}
-          </div>
+    <div class="col-lg-8">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="field-label"><i class="bi bi-person-fill"></i> Nombre</div>
+          <div class="field-value">{{ detalle_empleado.nombre_empleado }}</div>
         </div>
-
-        <div class="row mt-2">
-          <div class="col-md-6">
-            <label for="sexo_empleado" class="form-label">
-              Sexo del empleado
-            </label>
-            <br />
-            {{ detalle_empleado.sexo_empleado}}
-          </div>
-          <div class="col-md-6">
-            <label for="telefono_empleado" class="form-label">
-              Telefono del empleado
-            </label>
-            <br />
-            {{ detalle_empleado.telefono_empleado}}
-          </div>
+        <div class="col-md-6">
+          <div class="field-label"><i class="bi bi-person-badge-fill"></i> Apellido</div>
+          <div class="field-value">{{ detalle_empleado.apellido_empleado }}</div>
         </div>
+      </div>
 
-        <div class="row mt-2">
-          <div class="col-md-6">
-            <label for="email_empleado" class="form-label">
-              Email del empleado
-            </label>
-            <br />
-            {{ detalle_empleado.email_empleado}}
-          </div>
-          <div class="col-md-6">
-            <label for="profesion_empleado" class="form-label">
-              Profesión del empleado
-            </label>
-            <br />
-            {{ detalle_empleado.profesion_empleado}}
-          </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="field-label"><i class="bi bi-gender-ambiguous"></i> Sexo</div>
+          <div class="field-value">{{ detalle_empleado.sexo_empleado }}</div>
         </div>
+        <div class="col-md-6">
+          <div class="field-label"><i class="bi bi-telephone-fill"></i> Teléfono</div>
+          <div class="field-value">{{ detalle_empleado.telefono_empleado }}</div>
+        </div>
+      </div>
 
-        <div class="row mt-2">
-          <div class="col-md-6">
-            <label for="salario_empleado" class="form-label">
-              Salario del empleado
-            </label>
-            <br />
-            $ {{
-            '{:,.0f}'.format(detalle_empleado.salario_empleado).replace(',',
-            '.')}}
-          </div>
-          <div class="col-md-6">
-            <label for="" class="form-label"> IMAGEN DEL EMPLEADO </label>
-            <br />
-            <img
-              style="width: 200px"
-              src="/static/fotos_empleados/{{ detalle_empleado.foto_empleado }}"
-              alt="imagen-empleado" />
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="field-label"><i class="bi bi-envelope-fill"></i> Email</div>
+          <div class="field-value">{{ detalle_empleado.email_empleado }}</div>
+        </div>
+        <div class="col-md-6">
+          <div class="field-label"><i class="bi bi-briefcase-fill"></i> Profesión</div>
+          <div class="field-value">{{ detalle_empleado.profesion_empleado }}</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="field-label"><i class="bi bi-cash-stack"></i> Salario</div>
+          <div class="field-value">
+            $ {{ '{:,.0f}'.format(detalle_empleado.salario_empleado).replace(',', '.') }}
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  {% else %}
+  <h3 class="text-center text-danger my-5">No existe el Empleado 😭</h3>
+  {% endif %}
 </div>
-{% else %}
-<h2 class="text-center">
-  No existe el Empleado 😭
-  <hr />
-</h2>
-{% endif %} {% endblock %}
+{% endblock %}
